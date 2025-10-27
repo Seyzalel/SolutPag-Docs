@@ -1,0 +1,36 @@
+/* SolutPag API Theme variables */
+
+.api-theme {
+  --theme-transition: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.api-theme.theme-dark {
+  --color-bg: #030712; /* gray-950 */
+  --color-header: #030712;
+  --color-sidebar: #02050e; /* darker */
+  --color-surface: #111827; /* gray-900 */
+  --color-panel: #02050e;
+  --color-menu: #030712;
+  --color-code: #02050e;
+  --color-border: #1f2937; /* gray-800 */
+  --color-text: #f9fafb; /* gray-50 */
+  --color-muted: #9ca3af; /* gray-400 */
+  --color-primary: #3b82f6; /* blue-500 */
+  --color-primary-contrast: #f9fafb;
+}
+
+/* Smooth transitions for themed properties */
+.api-theme, .api-theme * {
+  transition: color 200ms var(--theme-transition), background-color 200ms var(--theme-transition), border-color 200ms var(--theme-transition);
+}
+
+/* Code surfaces */
+.api-theme .code-surface { background-color: var(--color-code); border-color: var(--color-border); color: var(--color-text); }
+
+/* Primary buttons */
+.api-theme .btn-primary { background: var(--color-primary); color: var(--color-primary-contrast); }
+.api-theme.theme-dark .btn-primary:hover { background: #2563eb; }
+
+/* Generic text colors */
+.api-theme .text-base-strong { color: var(--color-text); }
+.api-theme .text-base-muted { color: var(--color-muted); }

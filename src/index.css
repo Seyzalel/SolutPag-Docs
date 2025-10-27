@@ -1,0 +1,27 @@
+/* Reset enxuto para não interferir no layout da API */
+
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #0b0f1a; /* leve fundo escuro para combinar com tema */
+  color: #e5e7eb;
+}
+
+/* Links básicos */
+a { color: inherit; text-decoration: none; }

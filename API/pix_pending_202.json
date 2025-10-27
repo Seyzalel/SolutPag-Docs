@@ -1,0 +1,10 @@
+{
+  "sale_id": "sal_20250101_ABC123",
+  "status": "pending",
+  "amount_cents": 5000,
+  "currency": "BRL",
+  "comment": "Pagamento de serviço premium",
+  "message": "Cobrança criada. Aguardando confirmação do provedor.",
+  "next_check_seconds": 15,
+  "created_at": "2025-01-01T12:20:00Z"
+}

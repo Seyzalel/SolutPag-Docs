@@ -1,0 +1,9 @@
+{
+  "sale_id": "sal_20250101_ABC123",
+  "status": "pending",
+  "amount_cents": 5000,
+  "currency": "BRL",
+  "created_at": "2025-01-01T12:20:00Z",
+  "last_sync_at": "2025-01-01T12:25:00Z",
+  "provider_status": "AWAITING_PAYMENT"
+}

@@ -1,0 +1,8 @@
+[
+  {
+    "wallet_id": "wal_456",
+    "available_cents": 100000,
+    "locked_cents": 5000,
+    "created_at": "2023-01-01T00:00:00Z"
+  }
+]

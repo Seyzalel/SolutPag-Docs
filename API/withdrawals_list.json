@@ -1,0 +1,20 @@
+[
+  {
+    "wid": "WID-20250101-1A2B3C",
+    "status": "approved",
+    "amount_cents": 10000,
+    "fee_cents": 0,
+    "currency": "BRL",
+    "method": "pix",
+    "created_at": "2025-01-01T13:00:00Z"
+  },
+  {
+    "wid": "WID-20250101-7X8Y9Z",
+    "status": "processing",
+    "amount_cents": 250000,
+    "fee_cents": 390,
+    "currency": "BRL",
+    "method": "pix",
+    "created_at": "2025-01-01T13:10:00Z"
+  }
+]

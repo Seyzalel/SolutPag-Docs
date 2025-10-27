@@ -1,0 +1,18 @@
+{
+  "sale_id": "sal_20250101_ABC123",
+  "status": "paid",
+  "amount_cents": 5000,
+  "currency": "BRL",
+  "comment": "Pagamento de serviço premium",
+  "paid_at": "2025-01-01T12:27:43Z",
+  "end_to_end_id": "E1234567820250101122743000000000",
+  "transaction_id": "tx_9f8e7d6c5b4a",
+  "payer": {
+    "name": "CLIENTE PIX",
+    "tax_id": "***.***.***-**",
+    "bank_ispb": "60701190"
+  },
+  "links": {
+    "receipt": "/transactions/pix/sal_20250101_ABC123/receipt.pdf"
+  }
+}

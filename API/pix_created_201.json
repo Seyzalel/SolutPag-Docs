@@ -1,0 +1,15 @@
+{
+  "sale_id": "sal_20250101_ABC123",
+  "status": "created",
+  "amount_cents": 5000,
+  "currency": "BRL",
+  "comment": "Pagamento de serviço premium",
+  "qr_code_emv": "00020126580014BR.GOV.BCB.PIX0114+55119999999952040000530398654041.005802BR5912SOLUTPAG S.A.6012SAO PAULO62070503***6304ABCD",
+  "qr_code_base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...",
+  "expires_at": "2025-01-01T12:35:00Z",
+  "created_at": "2025-01-01T12:20:00Z",
+  "links": {
+    "self": "/transactions/pix/sal_20250101_ABC123",
+    "qrcode": "/transactions/pix/sal_20250101_ABC123/qrcode.png"
+  }
+}
