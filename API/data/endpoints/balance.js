@@ -11,8 +11,9 @@ export const balanceSection = {
     {
       language: 'javascript',
       title: 'Node.js',
-      description: 'Exemplo completo com tratamento de erros',
-      code: `async function getBalance() {
+      description: 'Exemplo completo com tratamento de erros e exibição da resposta JSON formatada',
+      code: `
+async function getBalance() {
   try {
     const response = await fetch('https://api.solutpag.com/api/public/v1/balance?detail=true', {
       method: 'GET',
@@ -22,24 +23,32 @@ export const balanceSection = {
       }
     });
 
-    if (!response.ok) {
-      throw new Error(\`HTTP error! status: \${response.status}\`);
-    }
+    if (!response.ok) {  
+      throw new Error(\`HTTP error! status: \${response.status}\`);  
+    }  
 
-    const data = await response.json();
+    const data = await response.json();  
+    // Exibe a resposta JSON formatada, linha por linha
+    console.log(JSON.stringify(data, null, 2));
     return data;
   } catch (error) {
+    console.error('Erro ao consultar saldo:', error);
     throw error;
   }
 }
 
-const balance = await getBalance();`,
+// Chamada da função de exemplo
+getBalance();
+      `,
       response: JSON.stringify(balanceResponse, null, 2)
     },
     {
       language: 'python',
       title: 'Python',
-      code: `import requests
+      description: 'Exemplo completo com tratamento de erros e exibição da resposta JSON formatada',
+      code: `
+import requests
+import json
 
 def get_balance():
     try:
@@ -52,52 +61,69 @@ def get_balance():
             params={'detail': 'true'}
         )
         response.raise_for_status()
-        
         data = response.json()
+        # Exibe a resposta JSON formatada, linha por linha
+        print(json.dumps(data, indent=2, ensure_ascii=False))
         return data
-        
     except requests.exceptions.RequestException as e:
+        print(f"Erro na requisição: {e}")
         raise Exception(f"Erro na requisição: {e}")
 
-balance = get_balance()`,
+# Chamada da função de exemplo
+get_balance()
+      `,
       response: JSON.stringify(balanceResponse, null, 2)
     },
     {
       language: 'java',
       title: 'Java',
-      description: 'Java 11+ HttpClient com headers e tratamento básico de erros',
-      code: `import java.net.URI;
+      description: 'Java 11+ HttpClient com headers, tratamento de erros e exibição da resposta JSON formatada',
+      code: `
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class BalanceExample {
-  public static void main(String[] args) throws Exception {
-    HttpClient client = HttpClient.newHttpClient();
-    HttpRequest request = HttpRequest.newBuilder()
-      .uri(URI.create("https://api.solutpag.com/api/public/v1/balance?detail=true"))
-      .header("Authorization", "Bearer sk_live_SEU_TOKEN_AQUI")
-      .header("Accept", "application/json")
-      .GET()
-      .build();
+    public static void main(String[] args) throws Exception {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.solutpag.com/api/public/v1/balance?detail=true"))
+            .header("Authorization", "Bearer sk_live_SEU_TOKEN_AQUI")
+            .header("Accept", "application/json")
+            .GET()
+            .build();
 
-    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    if (response.statusCode() >= 200 && response.statusCode() < 300) {
-      String json = response.body();
-      System.out.println(json);
-      // Sugestão: use Jackson para parsear o JSON
-    } else {
-      throw new RuntimeException("Erro HTTP: " + response.statusCode());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() >= 200 && response.statusCode() < 300) {
+            String json = response.body();
+            // Exibe a resposta JSON formatada, linha por linha
+            System.out.println(prettyPrintJSON(json));
+        } else {
+            throw new RuntimeException("Erro HTTP: " + response.statusCode());
+        }
     }
-  }
-}`,
+
+    // Função utilitária para formatar o JSON (sem dependências externas)
+    public static String prettyPrintJSON(String json) {
+        try {
+            com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            Object obj = mapper.readValue(json, Object.class);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+        } catch (Exception e) {
+            return json;
+        }
+    }
+}
+      `,
       response: JSON.stringify(balanceResponse, null, 2)
     },
     {
       language: 'react',
       title: 'React (Hooks)',
-      description: 'Componente funcional que busca o saldo ao montar',
-      code: `import { useEffect, useState } from 'react';
+      description: 'Componente funcional que busca o saldo ao montar e exibe o JSON formatado',
+      code: `
+import { useEffect, useState } from 'react';
 
 export default function BalanceViewer() {
   const [data, setData] = useState(null);
@@ -127,8 +153,13 @@ export default function BalanceViewer() {
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error}</p>;
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
-}`,
+  return (
+    <pre>
+      {data ? JSON.stringify(data, null, 2) : 'Nenhum dado.'}
+    </pre>
+  );
+}
+      `,
       response: JSON.stringify(balanceResponse, null, 2)
     }
   ]
