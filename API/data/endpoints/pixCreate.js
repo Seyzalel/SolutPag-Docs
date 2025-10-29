@@ -11,8 +11,9 @@ export const pixCreateSection = {
     {
       language: 'javascript',
       title: 'Node.js',
-      description: 'Criação completa de cobrança PIX com todos os campos e tratamento de respostas',
-      code: `async function createPixCharge(amount, comment = '') {
+      description: 'Criação completa de cobrança PIX com todos os campos, tratamento de erros e exibição da resposta JSON formatada',
+      code: `
+async function createPixCharge(amount, comment = '') {
   const payload = {
     amount_cents: amount, // Valor em centavos (R$ 50,00 = 5000)
     comment: comment      // Descrição opcional para identificação
@@ -34,23 +35,29 @@ export const pixCreateSection = {
         body: JSON.stringify(payload)
       }
     );
-
     const result = await response.json();
+    // Exibe a resposta formatada, linha por linha
+    console.log(JSON.stringify(result, null, 2));
     return result;
   } catch (error) {
+    console.error('Erro ao criar cobrança PIX:', error);
     throw error;
   }
 }
 
-// Exemplo de uso
-const charge = await createPixCharge(5000, 'Pagamento de serviço premium');`,
+// Exemplo de uso:
+createPixCharge(5000, 'Pagamento de serviço premium');
+      `,
       response: JSON.stringify(pixCreated201, null, 2)
     },
     {
       language: 'python',
       title: 'Python',
-      code: `import requests
+      description: 'Criação de cobrança PIX com resposta formatada e tratamento de exceções',
+      code: `
+import requests
 import uuid
+import json
 
 def create_pix_charge(amount_cents, comment=''):
     """
@@ -82,24 +89,26 @@ def create_pix_charge(amount_cents, comment=''):
             headers=headers,
             timeout=30
         )
-        
         response.raise_for_status()
-        
         data = response.json()
+        # Exibe a resposta JSON formatada, linha por linha
+        print(json.dumps(data, indent=2, ensure_ascii=False))
         return data
-            
     except requests.exceptions.RequestException as e:
+        print(f"Erro ao criar cobrança: {e}")
         raise Exception(f"Erro ao criar cobrança: {e}")
 
-# Exemplo de uso
-charge = create_pix_charge(5000, "Pagamento de teste")`,
+# Exemplo de uso:
+create_pix_charge(5000, "Pagamento de teste")
+      `,
       response: JSON.stringify(pixCreated201, null, 2)
     },
     {
       language: 'java',
       title: 'Java',
-      description: 'Java 11+ HttpClient para POST com corpo JSON e Idempotency-Key',
-      code: `import java.net.URI;
+      description: 'Java 11+ HttpClient para POST com corpo JSON, tratamento de erros e resposta formatada',
+      code: `
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -108,8 +117,8 @@ import java.time.Duration;
 public class PixCreateExample {
   public static void main(String[] args) throws Exception {
     String json = "{" +
-      "\"amount_cents\":5000," +
-      "\"comment\":\"Pagamento de teste\"" +
+      "\\\"amount_cents\\\":5000," +
+      "\\\"comment\\\":\\\"Pagamento de teste\\\"" +
     "}";
 
     HttpClient client = HttpClient.newHttpClient();
@@ -125,19 +134,33 @@ public class PixCreateExample {
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
     if (response.statusCode() >= 200 && response.statusCode() < 300) {
-      System.out.println(response.body());
+      // Exibe a resposta JSON formatada, linha por linha
+      System.out.println(prettyPrintJSON(response.body()));
     } else {
       throw new RuntimeException("Erro HTTP: " + response.statusCode());
     }
   }
-}`,
+
+  // Utilitário simples para formatar JSON (Jackson necessário no classpath)
+  public static String prettyPrintJSON(String json) {
+    try {
+      com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+      Object obj = mapper.readValue(json, Object.class);
+      return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+    } catch (Exception e) {
+      return json;
+    }
+  }
+}
+      `,
       response: JSON.stringify(pixCreated201, null, 2)
     },
     {
       language: 'react',
       title: 'React (Hooks)',
-      description: 'Hook simples para criar cobrança PIX e exibir o resultado',
-      code: `import { useState } from 'react';
+      description: 'Hook simples para criar cobrança PIX e exibir o resultado formatado',
+      code: `
+import { useState } from 'react';
 
 export default function PixCreateDemo() {
   const [result, setResult] = useState(null);
@@ -145,7 +168,8 @@ export default function PixCreateDemo() {
   const [error, setError] = useState(null);
 
   const createPix = async () => {
-    setLoading(true); setError(null);
+    setLoading(true);
+    setError(null);
     try {
       const res = await fetch('https://api.solutpag.com/api/public/v1/transactions/pix', {
         method: 'POST',
@@ -158,6 +182,7 @@ export default function PixCreateDemo() {
         body: JSON.stringify({ amount_cents: 5000, comment: 'Pagamento de teste' })
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
+      // Exibe a resposta formatada, linha por linha
       setResult(await res.json());
     } catch (e) {
       setError(e.message);
@@ -175,7 +200,8 @@ export default function PixCreateDemo() {
       {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
     </div>
   );
-}`,
+}
+      `,
       response: JSON.stringify(pixCreated201, null, 2)
     }
   ]
