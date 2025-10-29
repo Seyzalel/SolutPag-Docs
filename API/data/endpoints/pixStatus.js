@@ -1,4 +1,4 @@
-import pixStatusPending from '../../pix_status_pending.json';
+import pixStatusPending from '../../responses/pix/pix_status_pending.json';
 
 export const pixStatusSection = {
   id: 'pix-status',

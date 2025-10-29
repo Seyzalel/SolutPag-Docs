@@ -1,4 +1,4 @@
-import withdrawalsList from '../../withdrawals_list.json';
+import withdrawalsList from '../../responses/withdrawals/withdrawals_list.json';
 
 export const withdrawalsListSection = {
   id: 'withdrawals-list',

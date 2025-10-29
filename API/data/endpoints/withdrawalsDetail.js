@@ -1,4 +1,4 @@
-import withdrawalDetails from '../../withdrawal_details.json';
+import withdrawalDetails from '../../responses/withdrawals/withdrawal_details.json';
 
 export const withdrawalsDetailSection = {
   id: 'withdrawals-detail',

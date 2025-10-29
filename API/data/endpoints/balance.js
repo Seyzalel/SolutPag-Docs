@@ -1,4 +1,4 @@
-import balanceResponse from '../../balance_response.json';
+import balanceResponse from '../../responses/balance/balance_response.json';
 
 export const balanceSection = {
   id: 'balance',

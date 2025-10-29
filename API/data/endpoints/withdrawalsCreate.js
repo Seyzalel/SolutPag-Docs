@@ -1,4 +1,4 @@
-import withdrawalProcessing from '../../withdrawal_processing_202.json';
+import withdrawalProcessing from '../../responses/withdrawals/withdrawal_processing_202.json';
 
 export const withdrawalsCreateSection = {
   id: 'withdrawals-create',

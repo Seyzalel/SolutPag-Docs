@@ -4,64 +4,64 @@ Este diretório contém exemplos de respostas em JSON para os principais endpoin
 
 ## Estrutura dos Exemplos
 
-- `balance_response.json`: Exemplo de resposta do `GET /balance` com usuário, saldos e wallets.
-- `wallets_response.json`: Exemplo de listagem do `GET /wallets`.
-- `pix_created_201.json`: Exemplo de criação de cobrança PIX (HTTP 201 Created).
-- `pix_paid_200.json`: Exemplo de resposta quando uma cobrança PIX foi paga (HTTP 200 OK).
-- `pix_pending_202.json`: Exemplo de criação/processamento assíncrono de PIX (HTTP 202 Accepted).
-- `pix_status_pending.json`: Exemplo de status pendente em `GET /transactions/pix/{saleId}`.
-- `pix_status_paid.json`: Exemplo de status pago em `GET /transactions/pix/{saleId}`.
-- `withdrawal_approved_200.json`: Exemplo de saque aprovado em `POST /withdrawals` (HTTP 200 OK).
-- `withdrawal_processing_202.json`: Exemplo de saque em processamento em `POST /withdrawals` (HTTP 202 Accepted).
-- `withdrawals_list.json`: Exemplo de listagem de saques em `GET /withdrawals`.
-- `withdrawal_details.json`: Exemplo detalhado de saque em `GET /withdrawals/{wid}`.
+- `API/responses/balance/balance_response.json`: Exemplo de resposta do `GET /balance` com usuário, saldos e wallets.
+- `API/responses/wallets/wallets_response.json`: Exemplo de listagem do `GET /wallets`.
+- `API/responses/pix/pix_created_201.json`: Exemplo de criação de cobrança PIX (HTTP 201 Created).
+- `API/responses/pix/pix_paid_200.json`: Exemplo de resposta quando uma cobrança PIX foi paga (HTTP 200 OK).
+- `API/responses/pix/pix_pending_202.json`: Exemplo de criação/processamento assíncrono de PIX (HTTP 202 Accepted).
+- `API/responses/pix/pix_status_pending.json`: Exemplo de status pendente em `GET /transactions/pix/{saleId}`.
+- `API/responses/pix/pix_status_paid.json`: Exemplo de status pago em `GET /transactions/pix/{saleId}`.
+- `API/responses/withdrawals/withdrawal_approved_200.json`: Exemplo de saque aprovado em `POST /withdrawals` (HTTP 200 OK).
+- `API/responses/withdrawals/withdrawal_processing_202.json`: Exemplo de saque em processamento em `POST /withdrawals` (HTTP 202 Accepted).
+- `API/responses/withdrawals/withdrawals_list.json`: Exemplo de listagem de saques em `GET /withdrawals`.
+- `API/responses/withdrawals/withdrawal_details.json`: Exemplo detalhado de saque em `GET /withdrawals/{wid}`.
 
 ## Como Usar os Arquivos
 
 - Como mock local (Node.js):
-  - `const payload = require('./API/pix_paid_200.json');`
+  - `const payload = require('./API/responses/pix/pix_paid_200.json');`
 - Com `fetch` em dev: sirva o diretório como estáticos ou importe via bundler para testes.
 - Em ferramentas de API (Insomnia/Postman): importe o arquivo JSON para visualizar e comparar respostas.
 
 ## Endpoints e Formatos de Resposta
 
 ### 1) GET /balance
-- Exemplo: `balance_response.json`
+- Exemplo: `API/responses/balance/balance_response.json`
 - Campos principais:
   - `user`: informações básicas do usuário.
   - `balances[]`: saldos por moeda (`available_cents`, `locked_cents`).
   - `wallets[]`: wallets do usuário com seus saldos.
 
 ### 2) GET /wallets
-- Exemplo: `wallets_response.json`
+- Exemplo: `API/responses/wallets/wallets_response.json`
 - Resposta: array de wallets com `wallet_id`, `available_cents`, `locked_cents`, `created_at`.
 
 ### 3) POST /transactions/pix (Criar cobrança)
 - Exemplos:
-  - `pix_created_201.json` (201 Created): cobrança criada com QR EMV/Base64 e expiração.
-  - `pix_pending_202.json` (202 Accepted): processamento assíncrono em andamento; usar polling.
-  - `pix_paid_200.json` (200 OK): pagamento confirmado com `end_to_end_id` e `paid_at`.
+  - `API/responses/pix/pix_created_201.json` (201 Created): cobrança criada com QR EMV/Base64 e expiração.
+  - `API/responses/pix/pix_pending_202.json` (202 Accepted): processamento assíncrono em andamento; usar polling.
+  - `API/responses/pix/pix_paid_200.json` (200 OK): pagamento confirmado com `end_to_end_id` e `paid_at`.
 - Dicas:
   - Envie `Idempotency-Key` para evitar duplicidade.
   - Faça polling usando `GET /transactions/pix/{saleId}`.
 
 ### 4) GET /transactions/pix/{saleId}
 - Exemplos:
-  - `pix_status_pending.json`: transação aguardando pagamento.
-  - `pix_status_paid.json`: transação paga.
+  - `API/responses/pix/pix_status_pending.json`: transação aguardando pagamento.
+  - `API/responses/pix/pix_status_paid.json`: transação paga.
 - Campos úteis: `status`, `paid_at`, `end_to_end_id`, `last_sync_at`.
 
 ### 5) POST /withdrawals
 - Exemplos:
-  - `withdrawal_processing_202.json` (202): solicitação recebida e em processamento.
-  - `withdrawal_approved_200.json` (200): saque já aprovado/efetivado.
+  - `API/responses/withdrawals/withdrawal_processing_202.json` (202): solicitação recebida e em processamento.
+  - `API/responses/withdrawals/withdrawal_approved_200.json` (200): saque já aprovado/efetivado.
 - Campos: `wid`, `status`, `amount_cents`, `fee_cents`, `method`, `destination`.
 
 ### 6) GET /withdrawals
-- Exemplo: `withdrawals_list.json` — retorna array de saques com campos essenciais e `status` variando entre `processing`, `approved`, etc.
+- Exemplo: `API/responses/withdrawals/withdrawals_list.json` — retorna array de saques com campos essenciais e `status` variando entre `processing`, `approved`, etc.
 
 ### 7) GET /withdrawals/{wid}
-- Exemplo: `withdrawal_details.json` — inclui dados detalhados do destino PIX e da transação bancária (`end_to_end_id`).
+- Exemplo: `API/responses/withdrawals/withdrawal_details.json` — inclui dados detalhados do destino PIX e da transação bancária (`end_to_end_id`).
 
 ## Códigos de Status Possíveis
 

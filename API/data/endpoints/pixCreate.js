@@ -1,4 +1,4 @@
-import pixCreated201 from '../../pix_created_201.json';
+import pixCreated201 from '../../responses/pix/pix_created_201.json';
 
 export const pixCreateSection = {
   id: 'pix-create',

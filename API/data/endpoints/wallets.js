@@ -1,4 +1,4 @@
-import walletsResponse from '../../wallets_response.json';
+import walletsResponse from '../../responses/wallets/wallets_response.json';
 
 export const walletsSection = {
   id: 'wallets',
