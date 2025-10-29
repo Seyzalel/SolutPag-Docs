@@ -11,8 +11,9 @@ export const withdrawalsListSection = {
     {
       language: 'javascript',
       title: 'Node.js',
-      description: 'Listagem de saques com filtros e paginação',
-      code: `async function listWithdrawals(limit = 20, status = null) {
+      description: 'Listagem de saques com filtros e paginação, exibe resposta JSON formatada',
+      code: `
+async function listWithdrawals(limit = 20, status = null) {
   try {
     const params = new URLSearchParams({
       limit: limit.toString()
@@ -35,20 +36,27 @@ export const withdrawalsListSection = {
     }
 
     const data = await response.json();
+    // Exibe a resposta JSON formatada, linha por linha
+    console.log(JSON.stringify(data, null, 2));
     return data;
   } catch (error) {
+    console.error('Erro ao listar saques:', error);
     throw error;
   }
 }
 
-// Exemplo de uso
-const withdrawals = await listWithdrawals(10);`,
+// Exemplo de uso:
+listWithdrawals(10);
+      `,
       response: JSON.stringify(withdrawalsList, null, 2)
     },
     {
       language: 'python',
       title: 'Python',
-      code: `import requests
+      description: 'Listagem de saques com filtros e exibição do JSON formatado',
+      code: `
+import requests
+import json
 
 def list_withdrawals(limit=20, status=None):
     """
@@ -72,22 +80,25 @@ def list_withdrawals(limit=20, status=None):
             params=params
         )
         response.raise_for_status()
-        
         data = response.json()
+        # Exibe a resposta JSON formatada, linha por linha
+        print(json.dumps(data, indent=2, ensure_ascii=False))
         return data
-        
     except requests.exceptions.RequestException as e:
+        print(f"Erro na requisição: {e}")
         raise Exception(f"Erro na requisição: {e}")
 
-# Exemplo de uso
-withdrawals = list_withdrawals(10)`,
+# Exemplo de uso:
+list_withdrawals(10)
+      `,
       response: JSON.stringify(withdrawalsList, null, 2)
     },
     {
       language: 'java',
       title: 'Java',
-      description: 'Java 11+ HttpClient listando saques com filtros',
-      code: `import java.net.URI;
+      description: 'Java 11+ HttpClient listando saques com filtros e exibição JSON formatada',
+      code: `
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -109,19 +120,33 @@ public class WithdrawalsListExample {
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
     if (response.statusCode() >= 200 && response.statusCode() < 300) {
-      System.out.println(response.body());
+      // Exibe o JSON formatado, linha por linha
+      System.out.println(prettyPrintJSON(response.body()));
     } else {
       throw new RuntimeException("Erro HTTP: " + response.statusCode());
     }
   }
-}`,
+
+  // Utilitário para formatar JSON (Jackson necessário no classpath)
+  public static String prettyPrintJSON(String json) {
+    try {
+      com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+      Object obj = mapper.readValue(json, Object.class);
+      return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+    } catch (Exception e) {
+      return json;
+    }
+  }
+}
+      `,
       response: JSON.stringify(withdrawalsList, null, 2)
     },
     {
       language: 'react',
       title: 'React (Hooks)',
-      description: 'Componente que lista saques e permite filtro por status',
-      code: `import { useEffect, useState } from 'react';
+      description: 'Componente que lista saques, permite filtro por status e exibe JSON formatado',
+      code: `
+import { useEffect, useState } from 'react';
 
 export default function WithdrawalsViewer() {
   const [status, setStatus] = useState('');
@@ -159,7 +184,8 @@ export default function WithdrawalsViewer() {
       {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
     </div>
   );
-}`,
+}
+      `,
       response: JSON.stringify(withdrawalsList, null, 2)
     }
   ]
